@@ -4,7 +4,7 @@ from assistant import Assistant
 
 def main():
 
-    Assistant().run()
+     Assistant().run()
 
 
 if __name__ == "__main__":
