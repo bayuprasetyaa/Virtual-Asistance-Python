@@ -1,11 +1,15 @@
 import os
 import datetime
 import json
+import urllib
+from utils import request_api
 
 class Bot:
     __PATH = os.getcwd()
     __BOT = 'bot.json'
     __SCHEDULE = 'schedule.txt'
+    __JOKE_URL = 'https://geek-jokes.sameerkumar.website/api'
+    __JOKE = 'joke.txt'
 
     def __init__(self, name:str = None, born:datetime = None, user:str=None, log:str=None) -> None:
         """__init__
@@ -65,6 +69,15 @@ class Bot:
     
     def get_SCHEDULE(self):
         return self.__SCHEDULE
+    
+    def get_JOKE(self):
+        return self.__JOKE
+    
+    def search_joke(self):
+        try:
+            return request_api(self.__JOKE_URL)
+        except:
+            return ""
     
     
     # SETTING

@@ -1,4 +1,5 @@
 from assistant import Assistant
+import random
 
 class System(Assistant):
     
@@ -52,5 +53,12 @@ class System(Assistant):
                 print(f"{i}. {agenda}")
         except:
             print("No Schedule !")
-            
+    
+    def throw_jokes(self):
+        
+        jokes = super().throw_jokes()
+        try:
+            print(random.choice(jokes.split("\n")))
+        except:
+            print("sorry I'm not having humor now")
             

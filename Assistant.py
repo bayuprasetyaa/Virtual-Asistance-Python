@@ -2,6 +2,7 @@
 import os
 import json
 import datetime
+import urllib
 
 from bot import Bot
 
@@ -39,7 +40,19 @@ class Assistant(Bot):
                 return file.read()
     
     def throw_jokes(self):
-        pass
+        
+        new_joke = self.search_joke()
+        
+        if self.valid(self.get_JOKE()):
+            with open(self.get_JOKE(), 'a') as file:
+                file.write(f"\n{new_joke}")
+            return open(self.get_JOKE(), 'r').read()
+        elif len(new_joke) > 0:
+             with open(self.get_JOKE(), 'w') as file:
+                file.write(f"{new_joke}")
+             return open(self.get_JOKE(), 'r').read()
+        else:
+            return "No Joke"
     
     def send_email(self):
         pass
@@ -49,6 +62,7 @@ class Assistant(Bot):
         exit()
     
     
+    # Validation method
     def valid(self, check_file):
         
         for file in os.listdir(self.get_PATH()):
