@@ -57,6 +57,15 @@ class Bot:
     def get_user(self):
         return self.__USER
     
+    def get_BOT(self):
+        return self.__BOT
+    
+    def get_PATH(self):
+        return self.__PATH
+    
+    def get_SCHEDULE(self):
+        return self.__SCHEDULE
+    
     
     # SETTING
     def change_bot_name(self, name:str) -> None:

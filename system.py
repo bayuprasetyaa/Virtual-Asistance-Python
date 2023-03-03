@@ -5,10 +5,11 @@ class System(Assistant):
     def __init__(self):
         super().__init__()
         self.__func = {1:self.change_bot_name,
-                       2:'create_schedule',
-                       3:'show_schedule',
-                       4:'throw_jokes',
-                       5:'send_email'}
+                       2:self.create_schedule,
+                       3:self.show_schedule,
+                       4:self.throw_jokes,
+                       5:self.send_email,
+                       6:self.shut_down}
         
     def run(self):
         
@@ -23,9 +24,11 @@ class System(Assistant):
     6. Shut Down
                 """)
             
-            input_user = int(input(">> "))
-            
-            self.__func[input_user]()
+            try:
+                input_user = int(input(">> "))
+                self.__func[input_user]()
+            except ValueError as e:
+                print(f"Oops.. {e.__class__.__name__}. Please select using number !")
     
     
     def change_bot_name(self) -> None:

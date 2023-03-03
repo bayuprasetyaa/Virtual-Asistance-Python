@@ -7,11 +7,6 @@ from bot import Bot
 
 class Assistant(Bot):
     
-    __PATH = os.getcwd()
-    __BOT = 'bot.json'
-    __SCHEDULE = 'schedule.txt'
-    
-    
     def __init__(self):
         super().__init__()
         self.initialize()
@@ -19,16 +14,25 @@ class Assistant(Bot):
     def initialize(self):
         
         print("Initialize ...")
-        for file in os.listdir(self.__PATH):
-            if file == self.__BOT:
-                super().bot_init(path=os.path.join(self.__PATH, self.__BOT))
-                print("Initialize completed!")
-                break
+        if self.valid(self.get_BOT()):
+            super().bot_init(path=os.path.join(self.get_PATH(), self.get_BOT()))
+            print("Initialize completed!")
         else:
             print(f"Hi, this is the first time we meet. My name Jarvis")
             print("What is your name? ")
             user = input("Your name: ")
-            self.bot_init(path=self.__BOT, user=user)
+            self.bot_init(path=self.get_BOT(), user=user)
+            
+        # for file in os.listdir(self.__PATH):
+        #     if file == self.__BOT:
+        #         super().bot_init(path=os.path.join(self.__PATH, self.__BOT))
+        #         print("Initialize completed!")
+        #         break
+        # else:
+        #     print(f"Hi, this is the first time we meet. My name Jarvis")
+        #     print("What is your name? ")
+        #     user = input("Your name: ")
+        #     self.bot_init(path=self.__BOT, user=user)
         
     def create_schedule(self):
         pass
@@ -43,9 +47,17 @@ class Assistant(Bot):
         pass
     
     def shut_down(self):
-        print(f"Nice to meet you {self.get_user} !")
+        print(f"Good Bye {self.get_user()} !")
         exit()
     
+    
+    def valid(self, check_file):
+        
+        for file in os.listdir(self.get_PATH()):
+            if file == check_file:
+                return True
+        else:
+            return False
     
     def bot_init(self, path, user, name='Jarvis'):
         
