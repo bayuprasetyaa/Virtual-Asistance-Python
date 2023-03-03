@@ -14,6 +14,7 @@ class System(Assistant):
     def run(self):
         
         while True:
+            print("")
             self.default_msg()
             print("""
     1. Change bot name
@@ -35,5 +36,21 @@ class System(Assistant):
         
         name = input('New bot name: ')    
         return super().change_bot_name(name=name)
+    
+    
+    def create_schedule(self):
+        print("Create agenda")
+        date = input("Date (dd/mm/yyyy): ")
+        agenda = input("Agenda: ")
+        return super().create_schedule(date, agenda)
+    
+    def show_schedule(self):
+        print("List Schedule")
+        print("=============")
+        try:
+            for i, agenda in enumerate(super().show_schedule().split('\n')):
+                print(f"{i}. {agenda}")
+        except:
+            print("No Schedule !")
             
             

@@ -12,7 +12,6 @@ class Assistant(Bot):
         self.initialize()
             
     def initialize(self):
-        
         print("Initialize ...")
         if self.valid(self.get_BOT()):
             super().bot_init(path=os.path.join(self.get_PATH(), self.get_BOT()))
@@ -23,22 +22,21 @@ class Assistant(Bot):
             user = input("Your name: ")
             self.bot_init(path=self.get_BOT(), user=user)
             
-        # for file in os.listdir(self.__PATH):
-        #     if file == self.__BOT:
-        #         super().bot_init(path=os.path.join(self.__PATH, self.__BOT))
-        #         print("Initialize completed!")
-        #         break
-        # else:
-        #     print(f"Hi, this is the first time we meet. My name Jarvis")
-        #     print("What is your name? ")
-        #     user = input("Your name: ")
-        #     self.bot_init(path=self.__BOT, user=user)
         
-    def create_schedule(self):
-        pass
+    def create_schedule(self, date, agenda):
+        if self.valid(self.get_SCHEDULE()):
+            with open(self.get_SCHEDULE(), 'a') as file:
+                file.write(f"{date} - {agenda}")
+        else:
+            with open(self.get_SCHEDULE(), 'w') as file:
+                file.write(f"\n{date} - {agenda}")
+        
+        print("Schedule created !")
     
     def show_schedule(self):
-        pass
+        if self.valid(self.get_SCHEDULE()):
+            with open(self.get_SCHEDULE(), 'r') as file:
+                return file.read()
     
     def throw_jokes(self):
         pass
