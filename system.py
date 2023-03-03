@@ -55,10 +55,16 @@ class System(Assistant):
             print("No Schedule !")
     
     def throw_jokes(self):
-        
-        jokes = super().throw_jokes()
-        try:
-            print(random.choice(jokes.split("\n")))
-        except:
-            print("sorry I'm not having humor now")
+        while True:
+            jokes = super().throw_jokes()
+            try:
+                print(random.choice(jokes.split("\n")))
+                print("Haha, funny right. You want more? (yes/no)")
+                input_user = input(">> ")
+                if input_user.lower() != "yes":
+                    break
+            except:
+                print("sorry I'm not having humor now")
+                break
+            
             

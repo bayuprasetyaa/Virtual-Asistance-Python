@@ -2,7 +2,7 @@
 import os
 import json
 import datetime
-import urllib
+import smtplib
 
 from bot import Bot
 
@@ -55,7 +55,37 @@ class Assistant(Bot):
             return "No Joke"
     
     def send_email(self):
-        pass
+        sender = ''
+        password = ''
+        receiver = ''
+
+        subject = 'Greetings'
+        body = 'Hello, I hope you have a great day!'
+
+        message = "Subject: %s\n\n%s\n\nSent from %s." % (subject, body, self.get_BOT())
+
+        try:
+            #Create your SMTP session 
+            smtp = smtplib.SMTP('smtp.gmail.com', 587) 
+
+            #Use TLS to add security 
+            smtp.starttls() 
+
+            #User Authentication 
+            smtp.login(sender, password)
+
+            #Sending the Email
+            smtp.sendmail(sender, receiver, message) 
+
+            #Terminating the session 
+            smtp.quit() 
+            print ("Email sent successfully!") 
+        
+        except Exception as e:
+            print("Oops! I found", e.__class__, "occurred.")
+            print("Error message:", str(e))
+
+            input("- Press ENTER -")
     
     def shut_down(self):
         print(f"Good Bye {self.get_user()} !")
