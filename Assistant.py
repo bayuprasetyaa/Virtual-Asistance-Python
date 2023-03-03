@@ -1,41 +1,111 @@
-# Case Study: Virtual Assistant using Python (Assistant.py)
 
-# CLUE: import necessary libraries here
+import os
+import json
+import datetime
+import smtplib
 
-class Bot:
+from bot import Bot
 
-    def __init__(self, name):
-        
-        self.__name = name
-    
-    def set_bot(self, name:str) -> None:
-        """Set Bot Name
-        Args:
-            name (str)
-        """
-        pass 
-    
-    def get_bot(self) -> str:
-        """Get Bot Name
-        Returns:
-            str
-        """
-        pass
-
-class Assistance(Bot):
+class Assistant(Bot):
     
     def __init__(self):
         super().__init__()
-    
-    def create_schedule(self):
-        pass
+        self.initialize()
+            
+    def initialize(self):
+        print("Initialize ...")
+        if self.valid(self.get_BOT()):
+            super().bot_init(path=os.path.join(self.get_PATH(), self.get_BOT()))
+            print("Initialize completed!")
+        else:
+            print(f"Hi, this is the first time we meet. My name Jarvis")
+            print("What is your name? ")
+            user = input("Your name: ")
+            self.bot_init(path=self.get_BOT(), user=user)
+            
+        
+    def create_schedule(self, date, agenda):
+        if self.valid(self.get_SCHEDULE()):
+            with open(self.get_SCHEDULE(), 'a') as file:
+                file.write(f"{date} - {agenda}")
+        else:
+            with open(self.get_SCHEDULE(), 'w') as file:
+                file.write(f"\n{date} - {agenda}")
+        
+        print("Schedule created !")
     
     def show_schedule(self):
-        pass
+        if self.valid(self.get_SCHEDULE()):
+            with open(self.get_SCHEDULE(), 'r') as file:
+                return file.read()
     
     def throw_jokes(self):
-        pass
+        
+        new_joke = self.search_joke()
+        
+        if self.valid(self.get_JOKE()):
+            with open(self.get_JOKE(), 'a') as file:
+                file.write(f"\n{new_joke}")
+            return open(self.get_JOKE(), 'r').read()
+        elif len(new_joke) > 0:
+             with open(self.get_JOKE(), 'w') as file:
+                file.write(f"{new_joke}")
+             return open(self.get_JOKE(), 'r').read()
+        else:
+            return "No Joke"
     
     def send_email(self):
-        pass
+        sender = ''
+        password = ''
+        receiver = ''
+
+        subject = 'Greetings'
+        body = 'Hello, I hope you have a great day!'
+
+        message = "Subject: %s\n\n%s\n\nSent from %s." % (subject, body, self.get_BOT())
+
+        try:
+            #Create your SMTP session 
+            smtp = smtplib.SMTP('smtp.gmail.com', 587) 
+
+            #Use TLS to add security 
+            smtp.starttls() 
+
+            #User Authentication 
+            smtp.login(sender, password)
+
+            #Sending the Email
+            smtp.sendmail(sender, receiver, message) 
+
+            #Terminating the session 
+            smtp.quit() 
+            print ("Email sent successfully!") 
+        
+        except Exception as e:
+            print("Oops! I found", e.__class__, "occurred.")
+            print("Error message:", str(e))
+
+            input("- Press ENTER -")
     
+    def shut_down(self):
+        print(f"Good Bye {self.get_user()} !")
+        exit()
+    
+    
+    # Validation method
+    def valid(self, check_file):
+        
+        for file in os.listdir(self.get_PATH()):
+            if file == check_file:
+                return True
+        else:
+            return False
+    
+    def bot_init(self, path, user, name='Jarvis'):
+        
+        with open(path, 'w') as bot:
+            self.set_bot(name)
+            self.set_born(str(datetime.datetime.now()))
+            self.set_user(user)
+            json.dump(super().__dict__, bot)
+
