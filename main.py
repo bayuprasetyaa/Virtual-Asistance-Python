@@ -1,10 +1,10 @@
 # Case Study: Virtual Assistant using Python (main.py)
 
-from assistant import Assistant
+from system import System
 
 def main():
 
-     Assistant().run()
+     System().run()
 
 
 if __name__ == "__main__":
