@@ -11,13 +11,11 @@ class Assistant(Bot):
     __BOT = 'bot.json'
     __SCHEDULE = 'schedule.txt'
     
+    
     def __init__(self):
         super().__init__()
         self.initialize()
-    
-    def run(self):
-        pass
-    
+            
     def initialize(self):
         
         print("Initialize ...")
@@ -25,14 +23,12 @@ class Assistant(Bot):
             if file == self.__BOT:
                 super().bot_init(path=os.path.join(self.__PATH, self.__BOT))
                 print("Initialize completed!")
-                print(f"Hello {self.get_user()}, {self.get_bot_name()} here. How can I help ?")
                 break
         else:
             print(f"Hi, this is the first time we meet. My name Jarvis")
             print("What is your name? ")
             user = input("Your name: ")
             self.bot_init(path=self.__BOT, user=user)
-            print(f"Hello {self.get_user()}, {self.get_bot_name()} here. How can I help ?")
         
     def create_schedule(self):
         pass
@@ -45,6 +41,10 @@ class Assistant(Bot):
     
     def send_email(self):
         pass
+    
+    def shut_down(self):
+        print(f"Nice to meet you {self.get_user} !")
+        exit()
     
     
     def bot_init(self, path, user, name='Jarvis'):

@@ -3,6 +3,9 @@ import datetime
 import json
 
 class Bot:
+    __PATH = os.getcwd()
+    __BOT = 'bot.json'
+    __SCHEDULE = 'schedule.txt'
 
     def __init__(self, name:str = None, born:datetime = None, user:str=None, log:str=None) -> None:
         """__init__
@@ -56,15 +59,16 @@ class Bot:
     
     
     # SETTING
-    def change_bot_name(path:str, name:str) -> None:
-        with open('mahasiswa.txt', 'r') as bot:
+    def change_bot_name(self, name:str) -> None:
+        with open(self.__BOT, 'r') as bot:
             data = json.load(bot)
 
         data['_Bot__BOT_NAME'] = name
         
-        with open('mahasiswa.txt', 'w') as bot:
+        with open(self.__BOT, 'w') as bot:
             json.dump(data, bot)
-    
+        
+        self.set_bot(name)
     
     # Bot init
     def bot_init(self, path:str):
@@ -72,3 +76,6 @@ class Bot:
             data = json.load(bot)
             self.set_user(data['_Bot__USER'])
             self.set_bot(data['_Bot__BOT_NAME'])
+    
+    def default_msg(self):
+        print(f"Hello {self.get_user()}, {self.get_bot_name()} here. How can I help ?")
